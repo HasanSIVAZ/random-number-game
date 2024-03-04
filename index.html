@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tahmin Oyunu</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #result {
+        font-size: 1.2em;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+    <h1>Rastgele Sayı Tahmin Oyunu</h1>
+    <table>
+        <tbody>
+            <tr>
+    <td><p id="guessLabel">1. tahmini girin:</p></td><td>
+    <input type="number" id="guess" min="1" max="100"></td>
+</tr>
+<tr>
+    <td>
+        <button onclick="checkGuess()">Tahmin Yap</button>
+    </td>
+</tr>
+</tbody>
+</table>
+    
+    <hr>
+    <p id="result"></p>
+    <label id="gameOverMessage" style="display: none;"></label>
+
+    <script>
+        var randomNumber = Math.floor(Math.random() * 100) + 1;
+        var guesses = 1;
+        var maxGuesses = 8;
+
+        function checkGuess() {
+            var userGuess = parseInt(document.getElementById("guess").value);
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                document.getElementById("result").innerHTML = "Geçersiz giriş. Lütfen 1 ile 100 arasında bir sayı girin.";
+                return;
+            }
+            guesses++;
+            document.getElementById("guessLabel").innerHTML = guesses + ". tahmini girin:";
+            if (userGuess === randomNumber) {
+                document.getElementById("result").innerHTML = "Tebrikler! Sayıyı " + guesses + " denemede buldunuz!";
+            } else if (guesses === maxGuesses) {
+                document.getElementById("gameOverMessage").innerHTML = "Deneme hakkınız kalmadı. Kaybettiniz.";
+                document.getElementById("gameOverMessage").style.display = "block";
+            } else if (userGuess < randomNumber) {
+                document.getElementById("result").innerHTML = "Daha büyük bir sayı girin.";
+            } else {
+                document.getElementById("result").innerHTML = "Daha küçük bir sayı girin.";
+            }
+        }
+    </script>
+</body>
+</html>
